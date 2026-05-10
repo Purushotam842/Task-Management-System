@@ -1,0 +1,61 @@
+const express = require('express');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const connectDB = require('./config/db');
+
+// Load env vars
+dotenv.config();
+
+// Connect to database
+connectDB();
+
+// Route files
+const auth = require('./routes/auth');
+const projects = require('./routes/projects');
+const tasks = require('./routes/tasks');
+
+const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
+
+// Dev logging middleware
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
+
+
+app.use(helmet());
+app.use(cors());
+
+// Mount routers
+app.use('/api/v1/auth', auth);
+app.use('/api/v1/projects', projects);
+app.use('/api/v1/tasks', tasks); // Global tasks route
+// Re-route into other resource routers
+app.use('/api/v1/projects/:projectId/tasks', tasks);
+
+// Error handler (simplified)
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(err.statusCode || 500).json({
+        success: false,
+        message: err.message || 'Server Error'
+    });
+});
+
+const PORT = process.env.PORT || 5000;
+
+const server = app.listen(PORT, () => {
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+});
+
+process.on('unhandledRejection', (err, promise) => {
+    console.log(`Error: ${err.message}`);
+   
+    server.close(() => process.exit(1));
+});
+
