@@ -1,36 +1,43 @@
 :root {
-  /* Modern Dark Blue & White Theme */
-  --primary: #3b82f6; /* Blue */
-  --primary-dark: #1d4ed8; /* Darker blue */
-  --primary-light: #60a5fa; /* Lighter blue */
+  /* Premium teal + indigo accent palette */
+  --primary: #4f46e5; /* Indigo */
+  --primary-dark: #4338ca;
+  --primary-light: #818cf8;
 
-  /* White */
   --secondary: #ffffff;
 
-  --bg-main: #0f172a; /* Dark navy background */
-  --bg-card: #1e293b; /* Dark blue-gray cards */
-  --bg-sidebar: #0f172a; /* Dark navy sidebar */
+  /* Backgrounds */
+  --bg-main: #0b1220;
+  --bg-card: #121b2f;
+  --bg-sidebar: #0b1220;
 
-  --text-main: #ffffff; /* White text */
-  --text-muted: #cbd5e1; /* Light gray text */
-  --text-dim: #94a3b8; /* Muted gray text */
+  /* Text */
+  --text-main: #eaf0ff;
+  --text-muted: #b7c2e3;
+  --text-dim: #7f8db2;
 
-  --border: #334155; /* Gray border */
-  --border-focus: #3b82f6; /* Blue focus */
+  /* Borders */
+  --border: rgba(148, 163, 184, 0.22);
+  --border-focus: rgba(99, 102, 241, 0.65);
 
-  /* Accent colors */
-  --success: #10b981; /* Green */
-  --warning: #f59e0b; /* Amber */
-  --danger: #ef4444; /* Red */
-  --info: #3b82f6; /* Blue */
+  /* Accent tokens used by App.css */
+  --accent: var(--primary);
+  --accent-bg: rgba(79, 70, 229, 0.12);
+  --accent-border: rgba(79, 70, 229, 0.35);
+  --text-h: var(--text-main);
+  --social-bg: rgba(99, 102, 241, 0.08);
+  --shadow: 0 10px 35px rgba(79, 70, 229, 0.22);
 
-
+  /* Semantic colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: var(--primary);
 
   /* Glassmorphism */
-  --glass-bg: rgba(55, 38, 24, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-blur: blur(12px);
-
+  --glass-bg: rgba(18, 27, 47, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-blur: blur(14px);
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -40,29 +47,33 @@
   --space-xl: 2rem;
 
   /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
+  --transition-fast: 0.18s ease;
+  --transition-normal: 0.28s ease;
 }
 
-/* Light mode overrides - Clean Blue & White */
+/* Light mode overrides */
 [data-theme="light"] {
-  --bg-main: #ffffff; /* Pure white background */
-  --bg-card: #f8fafc; /* Light blue-gray cards */
-  --bg-sidebar: #f1f5f9; /* Light blue-gray sidebar */
+  --bg-main: #f6f8ff;
+  --bg-card: #ffffff;
+  --bg-sidebar: #f3f6ff;
 
-  --text-main: #0f172a; /* Very dark blue text for contrast */
-  --text-muted: #475569; /* Darker gray muted text */
-  --text-dim: #64748b; /* Medium gray dim text */
+  --text-main: #0b1220;
+  --text-muted: #42526b;
+  --text-dim: #5b6b88;
 
-  --border: #cbd5e1; /* Medium gray border */
-  --border-focus: #3b82f6; /* Blue focus */
+  --border: rgba(15, 23, 42, 0.12);
+  --border-focus: rgba(79, 70, 229, 0.45);
 
-  --glass-bg: #ffffff;
-  --glass-border: #e2e8f0;
+  --accent-bg: rgba(79, 70, 229, 0.10);
+  --accent-border: rgba(79, 70, 229, 0.28);
+  --social-bg: rgba(99, 102, 241, 0.10);
+  --shadow: 0 10px 35px rgba(79, 70, 229, 0.18);
+
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(15, 23, 42, 0.10);
 }
 
 /* Dark mode defaults already apply to :root */
-
 
 * {
   margin: 0;

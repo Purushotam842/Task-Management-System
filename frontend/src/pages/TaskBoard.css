@@ -127,7 +127,7 @@
 
 .task-card:hover {
     border-color: var(--primary);
-    background: rgba(59, 130, 246, 0.05);
+    background: rgba(79, 70, 229, 0.10);
     transform: translateY(-2px);
 }
 
@@ -142,7 +142,7 @@
 }
 
 .column-body.drag-over {
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(79, 70, 229, 0.12);
     border: 2px dashed var(--primary);
 }
 

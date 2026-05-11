@@ -6,41 +6,64 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 
-// Load env vars
+// Load environment variables
 dotenv.config();
 
-// Connect to database
+// Connect database
 connectDB();
 
-// Route files
+// Import routes
 const auth = require('./routes/auth');
 const projects = require('./routes/projects');
 const tasks = require('./routes/tasks');
 
 const app = express();
 
+// Body parser
 app.use(express.json());
+
+// Cookie parser
 app.use(cookieParser());
 
-// Dev logging middleware
+// Security headers
+app.use(helmet());
+
+// CORS
+app.use(cors());
+
+// Logging in development mode
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
+// Root route for Render health check
+app.get('/', (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: 'Task Management API is running'
+    });
+});
 
-app.use(helmet());
-app.use(cors());
-
-// Mount routers
+// API routes
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/projects', projects);
-app.use('/api/v1/tasks', tasks); // Global tasks route
-// Re-route into other resource routers
+app.use('/api/v1/tasks', tasks);
+
+// Nested tasks route
 app.use('/api/v1/projects/:projectId/tasks', tasks);
 
-// Error handler (simplified)
+// 404 handler
+app.use((req, res, next) => {
+    res.status(404).json({
+        success: false,
+        message: 'Route not found'
+    });
+});
+
+// Error handler
 app.use((err, req, res, next) => {
     console.error(err.stack);
+
     res.status(err.statusCode || 500).json({
         success: false,
         message: err.message || 'Server Error'
@@ -50,12 +73,16 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    console.log(
+        `Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`
+    );
 });
 
-process.on('unhandledRejection', (err, promise) => {
-    console.log(`Error: ${err.message}`);
-   
-    server.close(() => process.exit(1));
-});
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+    console.error(`Error: ${err.message}`);
 
+    server.close(() => {
+        process.exit(1);
+    });
+});
