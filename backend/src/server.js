@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 
 dotenv.config();
@@ -22,6 +23,8 @@ if (process.env.NODE_ENV === 'development') {
 app.use(helmet());
 
 app.use(cors());
+app.use(cookieParser());
+
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/projects', projects);
